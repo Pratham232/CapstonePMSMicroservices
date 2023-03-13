@@ -27,7 +27,7 @@ public class PatientAuthenticationServiceImpl implements PatientAuthenticationSe
 	@Override
 	public Optional<Patient> patientLogin(String email, String password) {
 		// TODO Auto-generated method stub
-		return patientAuthenticationRepository.findByEmail(email);
+		return patientAuthenticationRepository.authenticateByEmailandPassword(email,password);
 		
 	}
 

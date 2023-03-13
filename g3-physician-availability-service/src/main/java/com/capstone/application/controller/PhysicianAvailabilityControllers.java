@@ -40,8 +40,6 @@ public class PhysicianAvailabilityControllers {
 				System.out.println(i.getPhysicianEmail());
 				availableP.add(i);
 			}
-			
-			
 		}
 		
 		return availableP;

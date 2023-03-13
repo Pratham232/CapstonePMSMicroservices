@@ -39,7 +39,7 @@ public class PatientInfoController {
 
 	
 	@GetMapping("/patient")
-	public List<Patient> xy() {
+	public List<Patient> PatientList() {
 		List < Patient > patient = patientInfoService.findAll();
 		
 		return patient;

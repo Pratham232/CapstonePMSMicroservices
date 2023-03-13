@@ -2,11 +2,11 @@ package com.capstone.application.controller;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.application.model.Email;
 import com.capstone.application.model.Patient;
 import com.capstone.application.service.PatientAuthenticationService;
 
@@ -21,10 +21,10 @@ public class AuthenticationServiceController {
 		this.patientAuthenticationService = patientAuthenticationService;
 	}
 
-	@PostMapping("/patient/login/{email}/{password}")
-	public ResponseEntity<?>login(@PathVariable String email, @PathVariable String password)
+	@PostMapping("/patient/login")
+	public ResponseEntity<Optional<Patient>> login(@RequestBody Email email)
 	{
-		Optional<Patient> patient=patientAuthenticationService.patientLogin(email, password);
+		Optional<Patient> patient=patientAuthenticationService.patientLogin(email.getEmail(), email.getPassword());
 		return ResponseEntity.ok(patient);
 		
 	}

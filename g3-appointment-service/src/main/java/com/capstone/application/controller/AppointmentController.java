@@ -1,22 +1,24 @@
 package com.capstone.application.controller;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.capstone.application.model.Appointment;
 import com.capstone.application.service.AppointmentService;
 
 
+
+
 @RestController
-public class AppointmentController {
+public class AppointmentController 
+{
+
 	
 	private AppointmentService appointmentService;
 	
@@ -26,6 +28,7 @@ public class AppointmentController {
 		this.appointmentService = appointmentService;
 	}
 
+	
 	@GetMapping("/patient/{patientId}/appointments")
 	public Optional<Appointment> appointmetForPatientId(@PathVariable int patientId)
 	{
@@ -37,33 +40,34 @@ public class AppointmentController {
 		return appointmentService.findByAppointmentByPEmail(physicianEmail,acceptance);
 	} 
 	
-	@GetMapping("/appointment/{email}/{date}")
-	public List<Appointment> AcceptedAppointmentByEmail(@PathVariable String physicianEmail, @PathVariable String date) {
-		return null;
-//		return appointmentService.findByAppointmentByPEmail(physicianEmail);
+	@GetMapping("/appointment/{physicianEmail}/{date}")
+	public List<Appointment> AcceptedAppointmentByEmailandDate(@PathVariable String physicianEmail, @PathVariable String date,@RequestParam String acceptance) {
+		
+	return appointmentService.findByAppointmentByPEmailandDate(physicianEmail,date,acceptance);
 	}
 	
-	@GetMapping("/appointment")
-	public String acceptedAppointmentForNurse(@RequestParam String acceptance)
+	@GetMapping("/appointments")
+	public  List<Appointment> acceptedAppointmentForNurse(@RequestParam String acceptance)
 	{
-		return "All the accepted appointments";
+		return appointmentService.findByAcceptedAppointment(acceptance);
 	}
 	
 	@PostMapping("/appointment")
-	public String appointment()
+	public Appointment Createappointment(@RequestBody Appointment appointment)
 	{
-		return "Appointment Details";
+		return appointmentService.saveAppointment(appointment);
 	}
 	
 	@PutMapping("/appointment/{appointmentId}")
-	public String appointmentById(@PathVariable int appointmentId) {
-		return "Appointment Id Recieved "+appointmentId;
+	public Appointment updatedPhysicianAvailabilitys(@RequestBody Appointment appointment) 
+	{
+		Appointment updateResponse = appointmentService.update(appointment);
+        return updateResponse;
 	}
 	
 	@DeleteMapping("/appointment/{appointmentId}")
-	public String deleteAppointmentById(@PathVariable int appointmentId)
-	{
-		return "Appointment Deleted from this id "+ appointmentId;
+	public boolean deleteAppointmentById(@PathVariable("appointmentId")Integer appointmentId) {
+		return appointmentService.deleteAppointment(appointmentId);
 	}
 
 }
