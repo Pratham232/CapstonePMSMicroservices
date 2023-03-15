@@ -13,12 +13,9 @@ import com.capstone.application.model.Appointment;
 import com.capstone.application.service.AppointmentService;
 
 
-
-
 @RestController
 public class AppointmentController 
 {
-
 	
 	private AppointmentService appointmentService;
 	
@@ -58,7 +55,7 @@ public class AppointmentController
 		return appointmentService.saveAppointment(appointment);
 	}
 	
-	@PutMapping("/appointment/{appointmentId}")
+	@PutMapping("/appointments/{appointmentId}")
 	public Appointment updatedPhysicianAvailabilitys(@RequestBody Appointment appointment) 
 	{
 		Appointment updateResponse = appointmentService.update(appointment);
