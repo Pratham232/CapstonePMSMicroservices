@@ -1,4 +1,5 @@
 package com.capstone.application.controller;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.application.dto.VisitDetailsDto;
 import com.capstone.application.model.Prescription;
 import com.capstone.application.model.Tests;
 import com.capstone.application.model.VisitDetails;
@@ -31,16 +33,14 @@ public class PatientHealthRecordController {
 		return optional;
 	}
 	
-	@PostMapping("/patient/{patientId}/health-records")
-	 public VisitDetails updatePatientInfo(@RequestBody VisitDetails visitDetails) {
-		VisitDetails updateResponse = patientHealthRecordService.update(visitDetails);
-        return updateResponse;
+	@PostMapping("/patient/health-records")
+	 public VisitDetailsDto insertVisitDetials(@RequestBody VisitDetailsDto visitDetailsDto) {
+		return patientHealthRecordService.createVisitDetails(visitDetailsDto);
 	}
 	
 	@PutMapping("/patient/{patientId}/health-records")
-	public VisitDetails updatePatientInforDoctors(@RequestBody VisitDetails visitDetails) {
-		VisitDetails updateResponse = patientHealthRecordService.update(visitDetails);
-        return updateResponse;
+	public VisitDetailsDto updatePatientInforDoctors(@PathVariable int patientId, @RequestBody VisitDetailsDto visitDetailsDto) {
+		return patientHealthRecordService.updateVisitDetials(patientId,visitDetailsDto );
 	}
 	
 	@PostMapping("/patient/{visitId}/tests")
@@ -55,5 +55,10 @@ public class PatientHealthRecordController {
 	public Prescription updatePrescription(@RequestBody Prescription prescription) {
 		Prescription updateResponse=patientHealthRecordService.updatePrescription(prescription);
 		return updateResponse;
+	}
+	
+	@GetMapping("/patient/prescription")
+	public List<Prescription> findAllPrescription(){
+		return patientHealthRecordService.findAllPriscription();
 	}
 }

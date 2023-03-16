@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.application.dto.PatientDto;
 import com.capstone.application.model.Patient;
 import com.capstone.application.service.PatientInfoService;
 
@@ -25,16 +26,17 @@ public class PatientInfoController {
 
 	
 	@GetMapping("/patient/{patientId}")
-	public Optional<Patient> allergyById(@PathVariable int patientId) 
+	public PatientDto getPatientById(@PathVariable int patientId) 
 	{
-        Optional < Patient > optional = patientInfoService.findById(patientId);
-		return optional;
+        
+		return patientInfoService.displayPatientById(patientId);
 	}
 	
-	@PostMapping("/patient/{patientId}")
-	 public Patient updatePatientInfo(@RequestBody Patient patient) {
-        Patient updateResponse = patientInfoService.update(patient);
-        return updateResponse;
+	@PutMapping("/patient/{patientId}")
+	 public PatientDto updatePatientInfo(@PathVariable int patientId, @RequestBody PatientDto patientDto) 
+	{
+       
+		return patientInfoService.updatePatient(patientId, patientDto);
 	}
 
 	

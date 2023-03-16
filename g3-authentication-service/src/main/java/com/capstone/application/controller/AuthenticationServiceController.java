@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capstone.application.dto.PatientDto;
 import com.capstone.application.model.Email;
 import com.capstone.application.model.Patient;
 import com.capstone.application.service.PatientAuthenticationService;
@@ -30,8 +31,8 @@ public class AuthenticationServiceController {
 	}
 		
 	@PostMapping("/patient/register")
-	public Patient patientRegister( @RequestBody Patient patient)
+	public PatientDto patientRegister( @RequestBody PatientDto patientDto)
 	{
-		return patientAuthenticationService.save(patient);
+		return patientAuthenticationService.createPatient(patientDto);
 	}
 }

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.capstone.application.model.PhysicianAvailabiityModel;
+
+import com.capstone.application.dto.PhysicianAvailabilityDto;
+import com.capstone.application.model.PhysicianAvailabilityModel;
 import com.capstone.application.service.PhysicianAvailabilityService;
 
 @RestController
@@ -24,17 +26,17 @@ public class PhysicianAvailabilityControllers {
 	}
 
 	@GetMapping("/physician-availability")
-	public List<PhysicianAvailabiityModel> AvailablePhysician() {
-		List < PhysicianAvailabiityModel > availablePhysician = physicianAvailabilityService.findAll();
+	public List<PhysicianAvailabilityModel> AvailablePhysician() {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
 		
 		return availablePhysician;
 	}
 	
 	@GetMapping("/physician-avail")
-	public List<PhysicianAvailabiityModel> AvailablePhysician1(@RequestParam boolean availability) {
-		List < PhysicianAvailabiityModel > availablePhysician = physicianAvailabilityService.findAll();
-		List<PhysicianAvailabiityModel> availableP=new ArrayList<>();
-		for(PhysicianAvailabiityModel i:availablePhysician)
+	public List<PhysicianAvailabilityModel> AvailablePhysician1(@RequestParam boolean availability) {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
+		List<PhysicianAvailabilityModel> availableP=new ArrayList<>();
+		for(PhysicianAvailabilityModel i:availablePhysician)
 		{
 			if(i.isAvailability()==availability) {
 				System.out.println(i.getPhysicianEmail());
@@ -46,17 +48,15 @@ public class PhysicianAvailabilityControllers {
 	}
 	
 	@PostMapping("/physician-availability")
-	public PhysicianAvailabiityModel updatedPhysicianAvailability(@RequestBody PhysicianAvailabiityModel physicianAvailabiity) 
+	public PhysicianAvailabilityDto addPhysicianAvailability(@RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
 	{
-		PhysicianAvailabiityModel updateResponse = physicianAvailabilityService.update(physicianAvailabiity);
-        return updateResponse;
+		return physicianAvailabilityService.createAvailability(physicianAvailabilityDto);
 	}
 	
-	@PutMapping("/physician-availability")
-	public PhysicianAvailabiityModel updatedPhysicianAvailabilitys(@RequestBody PhysicianAvailabiityModel physicianAvailabiity) 
+	@PutMapping("/physician-availability/{physicianEmail}")
+	public PhysicianAvailabilityDto updateAvailability(@PathVariable String physicianEmail, @RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
 	{
-		PhysicianAvailabiityModel updateResponse = physicianAvailabilityService.update(physicianAvailabiity);
-        return updateResponse;
+        return  physicianAvailabilityService.updateAvailabilty(physicianEmail, physicianAvailabilityDto);
 	}
 	
 	@DeleteMapping("/physician-availability/{physicianEmail}")

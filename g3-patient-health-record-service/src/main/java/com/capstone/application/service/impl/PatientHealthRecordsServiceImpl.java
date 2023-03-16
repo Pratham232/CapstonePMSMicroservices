@@ -1,10 +1,13 @@
 package com.capstone.application.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capstone.application.dto.VisitDetailsDto;
 import com.capstone.application.model.Prescription;
 import com.capstone.application.model.Tests;
 import com.capstone.application.model.VisitDetails;
@@ -17,6 +20,9 @@ import com.capstone.application.service.PatientHealthRecordService;
 @Service
 public class PatientHealthRecordsServiceImpl implements PatientHealthRecordService {
 
+	@Autowired
+	private ModelMapper modelmapper;
+	
 	@Autowired
 	private PatietHealthRecordsRepository patientHealthRecordsRepository;
 	@Autowired
@@ -32,6 +38,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		return  patientHealthRecordsRepository.findById(patientId);
 	}
 
+	
 	@Override
 	public VisitDetails update(VisitDetails visitDetails) {
 		// TODO Auto-generated method stub
@@ -42,17 +49,53 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 	@Override
 	public Tests updateforTest(Tests tests) {
 		// TODO Auto-generated method stub
-		Tests updateResponse=testrepo.save(tests);
-		return updateResponse;
+		return testrepo.save(tests);
 	}
 
 	@Override
 	public Prescription updatePrescription(Prescription prescripion) {
 		// TODO Auto-generated method stub
-		Prescription updateResponse=prescriptionrepo.save(prescripion);
-		return updateResponse;
+		return prescriptionrepo.save(prescripion);
 	}
 	
 
+	@Override
+	public VisitDetailsDto createVisitDetails(VisitDetailsDto visitDetailsDto)
+	{
+		modelmapper.getConfiguration().setAmbiguityIgnored(true);
+		VisitDetails visitHistory=modelmapper.map(visitDetailsDto, VisitDetails.class);
+		VisitDetails saveadvisitHistory=patientHealthRecordsRepository.save(visitHistory);
+		VisitDetailsDto savedvisitHistoryDto=modelmapper.map(saveadvisitHistory, VisitDetailsDto.class);
+		return savedvisitHistoryDto;
+		
+	}
+
+
+	@Override
+	public VisitDetailsDto updateVisitDetials(int patientId, VisitDetailsDto visitDetailsDto) 
+	{
+		VisitDetails existingVisit=patientHealthRecordsRepository.findById(patientId).get();
+		existingVisit.setHeight(visitDetailsDto.getHeight());
+		existingVisit.setWeight(visitDetailsDto.getWeight());
+		existingVisit.setBPdiastolic(visitDetailsDto.getBPdiastolic());
+		existingVisit.setBPsystolic(visitDetailsDto.getBPsystolic());
+		existingVisit.setBodyTemperature(visitDetailsDto.getBodyTemperature());
+		existingVisit.setRepirationRate(visitDetailsDto.getRepirationRate());
+		existingVisit.setKeyNotes(visitDetailsDto.getKeyNotes());
+		
+		VisitDetails updatedVisitDetails=patientHealthRecordsRepository.save(existingVisit);
+		visitDetailsDto=modelmapper.map(updatedVisitDetails,VisitDetailsDto.class);
+		return visitDetailsDto;
+		
+	}
+
+
+	@Override
+	public List<Prescription> findAllPriscription() {
+		
+		return prescriptionrepo.findAll();
+	}
+	
+	
 
 }
