@@ -49,18 +49,30 @@ public class VisitDetails
 	@Column(name="appointment_id")
 	private int appointmentId;
 	
-	@Column(name="key_notes")
+	@Column(name="key_notes_by_nurse")
 	private String keyNotes;
+	
+	@Column(name="diagnosis_by_doctor")
+	private String diagnosis;
 
 	
 	
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
 	public VisitDetails() {
 		super();
 	}
 
+
 	public VisitDetails(int visitId, int patientId, float height, float weight, int bPsystolic, int bPdiastolic,
 			float bodyTemperature, int repirationRate, String bloodGroup, String nurseEmail, String physicianEmail,
-			int appointmentId, String keyNotes) {
+			int appointmentId, String keyNotes, String diagnosis) {
 		super();
 		this.visitId = visitId;
 		this.patientId = patientId;
@@ -75,7 +87,9 @@ public class VisitDetails
 		this.physicianEmail = physicianEmail;
 		this.appointmentId = appointmentId;
 		this.keyNotes = keyNotes;
+		this.diagnosis = diagnosis;
 	}
+
 
 	public int getVisitId() {
 		return visitId;
