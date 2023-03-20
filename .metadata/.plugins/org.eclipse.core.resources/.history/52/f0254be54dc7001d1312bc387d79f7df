@@ -1,0 +1,59 @@
+package com.capstone.application.controller;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+
+import com.capstone.application.dto.PatientDto;
+import com.capstone.application.model.Email;
+import com.capstone.application.model.Patient;
+import com.capstone.application.service.PatientAuthenticationService;
+
+@RestController
+public class AuthenticationServiceController {
+
+	private PatientAuthenticationService patientAuthenticationService;
+	
+	
+	public AuthenticationServiceController(PatientAuthenticationService patientAuthenticationService) {
+		super();
+		this.patientAuthenticationService = patientAuthenticationService;
+	}
+
+	@PostMapping("/patient/login")
+	@ResponseStatus(HttpStatus.CREATED)
+
+	public ResponseEntity<Optional<Patient>> login(@RequestBody Email email)
+	{
+		try {
+		Optional<Patient> patient=patientAuthenticationService.patientLogin(email.getEmail(), email.getPassword());
+		return ResponseEntity.ok(patient);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+		
+	}
+		
+	@PostMapping("/patient/register")
+	@ResponseStatus(HttpStatus.CREATED)
+	public PatientDto patientRegister( @RequestBody PatientDto patientDto)
+	{
+		try {
+		return patientAuthenticationService.createPatient(patientDto);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+}

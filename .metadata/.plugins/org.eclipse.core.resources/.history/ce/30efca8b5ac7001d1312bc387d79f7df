@@ -1,0 +1,113 @@
+package com.capstone.application.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+
+import com.capstone.application.dto.PhysicianAvailabilityDto;
+import com.capstone.application.model.PhysicianAvailabilityModel;
+import com.capstone.application.service.PhysicianAvailabilityService;
+
+import lombok.extern.log4j.Log4j2;
+
+@RestController
+@Log4j2
+public class PhysicianAvailabilityControllers {
+	
+	private PhysicianAvailabilityService physicianAvailabilityService;
+	
+	public PhysicianAvailabilityControllers(PhysicianAvailabilityService physicianAvailabilityService) {
+		super();
+		this.physicianAvailabilityService = physicianAvailabilityService;
+	}
+
+	@GetMapping("/physician-availability")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public List<PhysicianAvailabilityModel> AvailablePhysician() {
+		try {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
+		return availablePhysician;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	@GetMapping("/physician-avail")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public List<PhysicianAvailabilityModel> AvailablePhysician1(@RequestParam boolean availability) {
+		try {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
+		List<PhysicianAvailabilityModel> availableP=new ArrayList<>();
+		for(PhysicianAvailabilityModel i:availablePhysician)
+		{
+			if(i.isAvailability()==availability) {
+				System.out.println(i.getPhysicianEmail());
+				availableP.add(i);
+			}
+		}
+		
+		return availableP;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	@PostMapping("/physician-availability")
+	@ResponseStatus(HttpStatus.CREATED)
+	public PhysicianAvailabilityDto addPhysicianAvailability(@RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
+	{
+		try {
+		return physicianAvailabilityService.createAvailability(physicianAvailabilityDto);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	@PutMapping("/physician-availability/{physicianEmail}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public PhysicianAvailabilityDto updateAvailability(@PathVariable String physicianEmail, @RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
+	{
+		try {
+        return  physicianAvailabilityService.updateAvailabilty(physicianEmail, physicianAvailabilityDto);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	@DeleteMapping("/physician-availability/{physicianEmail}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public boolean deletePhysicianAvailability(@PathVariable("physicianEmail")String physicianEmail) {
+		try {
+		return physicianAvailabilityService.deletePhysician(physicianEmail);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+}

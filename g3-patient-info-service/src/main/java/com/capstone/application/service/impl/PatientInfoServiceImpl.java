@@ -4,15 +4,19 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.capstone.application.dto.PatientDto;
 import com.capstone.application.model.Patient;
 import com.capstone.application.repository.PatientInfoRepository;
 import com.capstone.application.service.PatientInfoService;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class PatientInfoServiceImpl implements PatientInfoService
 {
+	private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(PatientInfoServiceImpl.class);
+
 	@Autowired
 	private ModelMapper modelmapper;
 
@@ -26,20 +30,33 @@ public class PatientInfoServiceImpl implements PatientInfoService
 	@Override
 	public List<Patient> findAll() {
 		// TODO Auto-generated method stub
+		try {
 		return patientInfoRepository.findAll();
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 
 	@Override
 	public PatientDto displayPatientById(Integer patientId) {
-
+		try {
 		Patient patient = patientInfoRepository.findById(patientId).get();
 		return modelmapper.map(patient,PatientDto.class);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 	@Override
 	public PatientDto updatePatient(int patientId, PatientDto patientDto) {
-		
+		try {
 		Patient existingPatient = patientInfoRepository.findById(patientId).get();
 		existingPatient.setEmail(patientDto.getEmail());
 		existingPatient.setTitle(patientDto.getTitle());
@@ -53,8 +70,13 @@ public class PatientInfoServiceImpl implements PatientInfoService
 		Patient updatedPatient=patientInfoRepository.save(existingPatient);
 		patientDto=modelmapper.map(updatedPatient,PatientDto.class);
 
-		
 		return patientDto;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 	
 	

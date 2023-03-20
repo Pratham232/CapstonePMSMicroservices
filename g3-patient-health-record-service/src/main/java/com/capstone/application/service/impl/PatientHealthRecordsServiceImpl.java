@@ -1,5 +1,6 @@
 package com.capstone.application.service.impl;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,14 @@ import com.capstone.application.repository.PrescriptionRepo;
 import com.capstone.application.repository.TestRepo;
 import com.capstone.application.service.PatientHealthRecordService;
 
+import lombok.extern.log4j.Log4j2;
+
 
 @Service
+@Log4j2
 public class PatientHealthRecordsServiceImpl implements PatientHealthRecordService {
+
+	private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(PatientHealthRecordsServiceImpl.class);
 
 	@Autowired
 	private ModelMapper modelmapper;
@@ -34,39 +40,74 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 	@Override
 	public Optional<VisitDetails> findById(Integer patientId) {
 		// TODO Auto-generated method stub
-		
+		try {
 		return  patientHealthRecordsRepository.findById(patientId);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 	
 	@Override
 	public VisitDetails update(VisitDetails visitDetails) {
 		// TODO Auto-generated method stub
+		try {
 		VisitDetails updateResponse = patientHealthRecordsRepository.save(visitDetails);
         return updateResponse;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 	@Override
 	public Tests updateforTest(Tests tests) {
 		// TODO Auto-generated method stub
+		try {
 		return testrepo.save(tests);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 	@Override
 	public Prescription updatePrescription(Prescription prescripion) {
 		// TODO Auto-generated method stub
+		try {
 		return prescriptionrepo.save(prescripion);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 	
 
 	@Override
 	public VisitDetailsDto createVisitDetails(VisitDetailsDto visitDetailsDto)
 	{
+		try {
 		modelmapper.getConfiguration().setAmbiguityIgnored(true);
 		VisitDetails visitHistory=modelmapper.map(visitDetailsDto, VisitDetails.class);
+		visitHistory.setDiagnosis(null);
 		VisitDetails saveadvisitHistory=patientHealthRecordsRepository.save(visitHistory);
 		VisitDetailsDto savedvisitHistoryDto=modelmapper.map(saveadvisitHistory, VisitDetailsDto.class);
 		return savedvisitHistoryDto;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 		
 	}
 
@@ -74,6 +115,7 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 	@Override
 	public VisitDetailsDto updateVisitDetials(int patientId, VisitDetailsDto visitDetailsDto) 
 	{
+		try {
 		VisitDetails existingVisit=patientHealthRecordsRepository.findById(patientId).get();
 		existingVisit.setHeight(visitDetailsDto.getHeight());
 		existingVisit.setWeight(visitDetailsDto.getWeight());
@@ -82,11 +124,16 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		existingVisit.setBodyTemperature(visitDetailsDto.getBodyTemperature());
 		existingVisit.setRepirationRate(visitDetailsDto.getRepirationRate());
 		existingVisit.setKeyNotes(visitDetailsDto.getKeyNotes());
-		
+		existingVisit.setDiagnosis(visitDetailsDto.getDiagnosis());
 		VisitDetails updatedVisitDetails=patientHealthRecordsRepository.save(existingVisit);
 		visitDetailsDto=modelmapper.map(updatedVisitDetails,VisitDetailsDto.class);
 		return visitDetailsDto;
-		
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new Exception("Unable to fetch record");
+		}
 	}
 
 

@@ -2,11 +2,23 @@ package com.capstone.application.dto;
 
 public class appointmentDto 
 {
+	private int appointmentId;
+	private String acceptance;
+
 	private String patientId;
 	private String date;
 	private String reason;
 	private String physicianEmail;
 	private String submissonDate;
+	
+	
+	
+	public int getAppointmentId() {
+		return appointmentId;
+	}
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
 	public String getPatientId() {
 		return patientId;
 	}
@@ -37,6 +49,11 @@ public class appointmentDto
 	public void setSubmissonDate(String submissonDate) {
 		this.submissonDate = submissonDate;
 	}
-	
+	public String getAcceptance() {
+		return acceptance;
+	}
+	public void setAcceptance(String acceptance) {
+		this.acceptance = acceptance;
+	}
 	
 }

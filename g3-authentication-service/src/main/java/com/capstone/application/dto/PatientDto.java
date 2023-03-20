@@ -5,7 +5,8 @@ public class PatientDto {
 	private String email;
 	private String firstName;
 	private String lastName;
-	private String dob;
+	private String age;
+
 	private String contactNumber;
 	private String gender;
 	private String password;
@@ -30,12 +31,7 @@ public class PatientDto {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getDob() {
-		return dob;
-	}
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
+
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -59,6 +55,12 @@ public class PatientDto {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
 	}
 	
 }

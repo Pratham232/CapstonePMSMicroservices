@@ -14,8 +14,15 @@ public class VisitDetailsDto {
 	private String physicianEmail;
 	private String keyNotes;
 	private int appointmentId;
+	private String diagnosis;
 	
 	
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
 	public int getPatientId() {
 		return patientId;
 	}

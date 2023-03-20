@@ -2,12 +2,16 @@ package com.capstone.application.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.capstone.application.dto.VisitDetailsDto;
 import com.capstone.application.model.Prescription;
@@ -15,8 +19,13 @@ import com.capstone.application.model.Tests;
 import com.capstone.application.model.VisitDetails;
 import com.capstone.application.service.PatientHealthRecordService;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
+@Log4j2
 public class PatientHealthRecordController {
+	private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(PatientHealthRecordController.class);
+
 	
 	private PatientHealthRecordService patientHealthRecordService;
 	
@@ -26,39 +35,87 @@ public class PatientHealthRecordController {
 		this.patientHealthRecordService = patientHealthRecordService;
 	}
 
-	@GetMapping("/patient/{patientId}/health-records")
+	@GetMapping("/patient/health-records/{patientId}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public Optional<VisitDetails> healthRecordsById(@PathVariable int patientId) 
 	{
+		try {
         Optional < VisitDetails > optional = patientHealthRecordService.findById(patientId);
 		return optional;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 	}
 	
-	@PostMapping("/patient/health-records")
+	@PostMapping("/patient/health-record")
+	@ResponseStatus(HttpStatus.CREATED)
 	 public VisitDetailsDto insertVisitDetials(@RequestBody VisitDetailsDto visitDetailsDto) {
+		try {
 		return patientHealthRecordService.createVisitDetails(visitDetailsDto);
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 	}
 	
-	@PutMapping("/patient/{patientId}/health-records")
+	@PutMapping("/patient/health-records/{patientId}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public VisitDetailsDto updatePatientInforDoctors(@PathVariable int patientId, @RequestBody VisitDetailsDto visitDetailsDto) {
+		try {
 		return patientHealthRecordService.updateVisitDetials(patientId,visitDetailsDto );
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 	}
 	
-	@PostMapping("/patient/{visitId}/tests")
+	@PostMapping("/patient/tests/{visitId}")
+	@ResponseStatus(HttpStatus.CREATED)
 	public Tests updateTest(@RequestBody Tests tests)
 	{
+		try {
 		Tests updateResponse=patientHealthRecordService.updateforTest(tests);
 		return updateResponse;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 		
 	}
 	
-	@PostMapping("/patient/{visitId}/prescription")
+	@PostMapping("/patient/prescription/{visitId}")
+	@ResponseStatus(HttpStatus.CREATED)
 	public Prescription updatePrescription(@RequestBody Prescription prescription) {
+		try {
 		Prescription updateResponse=patientHealthRecordService.updatePrescription(prescription);
 		return updateResponse;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 	}
 	
 	@GetMapping("/patient/prescription")
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public List<Prescription> findAllPrescription(){
+		try {
 		return patientHealthRecordService.findAllPriscription();
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
 	}
 }

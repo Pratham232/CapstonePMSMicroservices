@@ -2,6 +2,7 @@ package com.capstone.application.dto;
 
 public class PatientDto 
 {
+	private int patientId;
 	private String email;
 	private String title;
 	private String firstName;
@@ -64,6 +65,12 @@ public class PatientDto
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public int getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 	
 }

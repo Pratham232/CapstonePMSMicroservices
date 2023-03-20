@@ -1,0 +1,75 @@
+package com.capstone.application.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+
+import com.capstone.application.dto.PhysicianAvailabilityDto;
+import com.capstone.application.model.PhysicianAvailabilityModel;
+import com.capstone.application.service.PhysicianAvailabilityService;
+
+@RestController
+public class PhysicianAvailabilityControllers {
+	
+	private PhysicianAvailabilityService physicianAvailabilityService;
+	
+	public PhysicianAvailabilityControllers(PhysicianAvailabilityService physicianAvailabilityService) {
+		super();
+		this.physicianAvailabilityService = physicianAvailabilityService;
+	}
+
+	@GetMapping("/physician-availability")
+	public List<PhysicianAvailabilityModel> AvailablePhysician() {
+		try {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
+		return availablePhysician;
+		}
+		catch(Exception e)
+		{
+			log.error(e.getMessage());
+			throw new HttpClientErrorException(HttpStatusCode.valueOf(500));
+		}
+	}
+	
+	@GetMapping("/physician-avail")
+	public List<PhysicianAvailabilityModel> AvailablePhysician1(@RequestParam boolean availability) {
+		List < PhysicianAvailabilityModel > availablePhysician = physicianAvailabilityService.findAll();
+		List<PhysicianAvailabilityModel> availableP=new ArrayList<>();
+		for(PhysicianAvailabilityModel i:availablePhysician)
+		{
+			if(i.isAvailability()==availability) {
+				System.out.println(i.getPhysicianEmail());
+				availableP.add(i);
+			}
+		}
+		
+		return availableP;
+	}
+	
+	@PostMapping("/physician-availability")
+	public PhysicianAvailabilityDto addPhysicianAvailability(@RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
+	{
+		return physicianAvailabilityService.createAvailability(physicianAvailabilityDto);
+	}
+	
+	@PutMapping("/physician-availability/{physicianEmail}")
+	public PhysicianAvailabilityDto updateAvailability(@PathVariable String physicianEmail, @RequestBody PhysicianAvailabilityDto physicianAvailabilityDto) 
+	{
+        return  physicianAvailabilityService.updateAvailabilty(physicianEmail, physicianAvailabilityDto);
+	}
+	
+	@DeleteMapping("/physician-availability/{physicianEmail}")
+	public boolean deletePhysicianAvailability(@PathVariable("physicianEmail")String physicianEmail) {
+		return physicianAvailabilityService.deletePhysician(physicianEmail);
+	}
+}
