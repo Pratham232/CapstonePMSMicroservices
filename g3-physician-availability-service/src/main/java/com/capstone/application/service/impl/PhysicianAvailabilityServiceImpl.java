@@ -38,9 +38,10 @@ public class PhysicianAvailabilityServiceImpl implements PhysicianAvailabilitySe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 	
 	@Override
@@ -52,9 +53,10 @@ public class PhysicianAvailabilityServiceImpl implements PhysicianAvailabilitySe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return false;
 	}
 
 	@Override
@@ -68,9 +70,10 @@ public class PhysicianAvailabilityServiceImpl implements PhysicianAvailabilitySe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	@Override
@@ -87,9 +90,10 @@ public class PhysicianAvailabilityServiceImpl implements PhysicianAvailabilitySe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 		
 	}
 

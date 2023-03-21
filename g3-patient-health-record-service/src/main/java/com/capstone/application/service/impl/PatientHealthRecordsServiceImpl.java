@@ -45,9 +45,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	
@@ -60,9 +61,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	@Override
@@ -73,9 +75,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return tests;
 	}
 
 	@Override
@@ -86,9 +89,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 	
 
@@ -105,9 +109,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 		
 	}
 
@@ -131,9 +136,10 @@ public class PatientHealthRecordsServiceImpl implements PatientHealthRecordServi
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 

@@ -14,8 +14,6 @@ import com.capstone.application.dto.PatientDto;
 import com.capstone.application.model.Email;
 import com.capstone.application.model.Patient;
 import com.capstone.application.service.PatientAuthenticationService;
-import com.capstone.application.service.impl.AppointmentServiceImpl;
-
 import lombok.extern.log4j.Log4j2;
 
 @RestController

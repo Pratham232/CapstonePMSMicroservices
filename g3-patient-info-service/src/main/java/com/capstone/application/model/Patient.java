@@ -25,8 +25,8 @@ public class Patient
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="dob")
-	private String dob;
+	@Column(name="age")
+	private String age;
 	
 	@Column(name="contact_number")
 	private String contactNumber;
@@ -46,7 +46,7 @@ public class Patient
 		super();
 	}
 
-	public Patient(int patientId, String email, String title, String firstName, String lastName, String dob,
+	public Patient(int patientId, String email, String title, String firstName, String lastName, String age,
 			String contactNumber, String password, String gender, String address) {
 		super();
 		this.patientId = patientId;
@@ -54,7 +54,7 @@ public class Patient
 		this.title = title;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dob = dob;
+		this.age = age;
 		this.contactNumber = contactNumber;
 		this.password = password;
 		this.gender = gender;
@@ -101,12 +101,12 @@ public class Patient
 		this.lastName = lastName;
 	}
 
-	public String getDob() {
-		return dob;
+	public String getage() {
+		return age;
 	}
 
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setage(String age) {
+		this.age = age;
 	}
 
 	public String getContactNumber() {

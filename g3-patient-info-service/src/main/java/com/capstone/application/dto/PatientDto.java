@@ -7,7 +7,7 @@ public class PatientDto
 	private String title;
 	private String firstName;
 	private String lastName;
-	private String dob;
+	private String age;
 	private String contactNumber;
 	private String password;
 	private String gender;
@@ -36,11 +36,11 @@ public class PatientDto
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getDob() {
-		return dob;
+	public String getage() {
+		return age;
 	}
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setage(String age) {
+		this.age = age;
 	}
 	public String getContactNumber() {
 		return contactNumber;

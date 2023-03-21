@@ -34,9 +34,11 @@ public class AllergyServiceImpl implements AllergyService {
 		}
 		catch(Exception e)
 		{
+			 e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
+		
 		
 	}
 
@@ -48,9 +50,10 @@ public class AllergyServiceImpl implements AllergyService {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 }

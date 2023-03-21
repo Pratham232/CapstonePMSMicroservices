@@ -35,9 +35,10 @@ public class PatientInfoServiceImpl implements PatientInfoService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 
@@ -49,9 +50,10 @@ public class PatientInfoServiceImpl implements PatientInfoService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class PatientInfoServiceImpl implements PatientInfoService
 		existingPatient.setTitle(patientDto.getTitle());
 		existingPatient.setFirstName(patientDto.getFirstName());
 		existingPatient.setLastName(patientDto.getLastName());
-		existingPatient.setDob(patientDto.getDob());
+		existingPatient.setage(patientDto.getage());
 		existingPatient.setContactNumber(patientDto.getContactNumber());
 		existingPatient.setPassword(patientDto.getPassword());
 		existingPatient.setGender(patientDto.getGender());
@@ -74,9 +76,10 @@ public class PatientInfoServiceImpl implements PatientInfoService
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 	
 	

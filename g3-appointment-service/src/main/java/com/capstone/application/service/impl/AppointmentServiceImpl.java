@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.application.controller.AppointmentController;
 import com.capstone.application.dto.appointmentDto;
 import com.capstone.application.model.Appointment;
 import com.capstone.application.repository.AppointmentRepository;
@@ -41,9 +40,11 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			 e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
+
 		}
+		return null;
 	}
 
 	@Override
@@ -54,9 +55,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			 e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	@Override
@@ -68,9 +70,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			 e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return false;
 	}
 
 	@Override
@@ -81,9 +84,11 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
+			
 		}
+		return null;
 	}
 
 	@Override
@@ -98,9 +103,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return appointmentdto;
 	}
 
 	@Override
@@ -111,9 +117,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	@Override
@@ -125,9 +132,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 	

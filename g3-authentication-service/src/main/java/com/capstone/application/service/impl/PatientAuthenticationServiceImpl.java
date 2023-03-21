@@ -6,7 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capstone.application.controller.AuthenticationServiceController;
 import com.capstone.application.dto.PatientDto;
 import com.capstone.application.model.Patient;
 import com.capstone.application.repository.PatientAuthenticationRepository;
@@ -36,9 +35,10 @@ public class PatientAuthenticationServiceImpl implements PatientAuthenticationSe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new UpdateFailedException("Unable to fetch record");
 		}
+		return null;
 
 	}
 
@@ -50,9 +50,10 @@ public class PatientAuthenticationServiceImpl implements PatientAuthenticationSe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 		
 	}
 	
@@ -66,9 +67,10 @@ public class PatientAuthenticationServiceImpl implements PatientAuthenticationSe
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(e.getMessage());
-			throw new Exception("Unable to fetch record");
 		}
+		return null;
 	}
 
 }
